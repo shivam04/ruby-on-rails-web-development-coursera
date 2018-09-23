@@ -1,0 +1,23 @@
+<h1>Seaching for - <%=  @search_item %></h1>
+<p>Develped by <%= link_to " Wut Hmone Hnin Hlaing", 'http://wuthmonehninhlaing.blogspot.my'%></p>
+
+<% if @searches.nil? %>
+	<p> No searches found with relevant information .. Sorry </p>
+
+<% else %>
+	<table border="1">
+
+	<tr>
+		<th>Thumbnail</th>
+		<th>Title</th>
+		<th>Social Rank</th>
+	</tr>
+		<% @searches.each do |search| %>
+			<tr>
+				<td><%= link_to image_tag(search["image_url"], height: '100', width: '100'), search["f2f_url"] %></td>
+				<td><%= link_to sanitize(search["title"]), search["f2f_url"] %></td>
+				<td><%= search["social_rank"] %></td>
+			</tr>
+		<%end%>
+	</table>
+<% end %>
