@@ -350,6 +350,7 @@ any `User` removed.
 
 13. Add a method to the `User` model class called `get_completed_count`, which: 
   
+    * accepts a user as a parameter
     * determines the number of `TodoItems` the `User` has completed using an aggregate query function 
         - (Hint: You are looking for the count of `TodoItems` associated with a specific `User` where `completed:true`)
     * returns the count
