@@ -1242,7 +1242,7 @@ In the `LegResult` class, you must:
     `LegResult` it has an order and name.
 
     ```ruby
-    > race=Race.upcoming.in(:"events.n"=>["t1","t2"]).first
+    > race=Race.upcoming.where(:"events.n"=>"t1",:"events.n"=>"t2").first
     > event=race.events.where(:name=>"t1").first
     > result.build_event(event.attributes)
      => #<Event _id: 569a58b8e301d083c300000e, o(order): 1, n(name): "t1", d(distance): nil, u(units): nil> 
@@ -2787,7 +2787,7 @@ scopes must:
 return a criteria result representing all the `upcoming` `Race`s that
 the `Racer` has not yet registered for.  This method must:
 
-    * be a class method in `Race` called `upcoming_available_to`
+    * be a class method in `Racer` called `upcoming_available_to`
     * accept a `Racer` as an input parameter
     * return a criteria result which the caller can add additional
     query, page, and pluck commands to.
@@ -3090,7 +3090,7 @@ indicated in the order given below:
     * column with `Group` - `entrant.group_name`
     * column with `Group Place` - `entrant.group_place`
     * column with `Swim` - `entrant.swim_secs` formated as `H:MM:SS`
-    * column with `Pace 100` - `entrant.swim_pace_100` formatted as `MM:SS`
+    * column with `Pace 100` - `entrant.swim_pace_100` formatted as `MM:HH`
     * column with `T1` - `entrant.t1_secs` formatted as `MM:SS`
     * column with `Bike` - `entrant.bike_secs` formated as `H:MM:SS`
     * column with `MPH` - `entrant.bike_mph` format rounded to one (1) decimal place
@@ -3335,8 +3335,8 @@ registered for.  The controller action for `racers#edit` must:
             <th>Date</th>
             <th>City</th>
           ...
-            <th>Run</th>
-            <th>Units</th>
+            <th>Run distance</th>
+            <th>Run units</th>
             <th colspan="3"></th>
           </tr>
         </thead>
@@ -3413,7 +3413,7 @@ controller.
 
     * finds the `Racer` based on a `params[:racer_id]`
     * finds the `Race` based on `params[:race_id]`
-    * uses the `Race.create_entrant` class method to create an `Entrant`
+    * uses the `Racer.create_entrant` class method to create an `Entrant`
     * re-directs the `racer#show` page with a status of the registration passed in the 
       flash `notice`
 
@@ -3548,4 +3548,4 @@ and will perform a test with different query terms.
 `-- vendor
 ```
 
-#### Last Updated: 2016-08-23
+#### Last Updated: 2016-03-12

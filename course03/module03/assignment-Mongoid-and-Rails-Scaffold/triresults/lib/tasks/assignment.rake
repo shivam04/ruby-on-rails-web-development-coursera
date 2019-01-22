@@ -37,12 +37,6 @@ namespace :assignment do
       entrant["racer"]["_id"]=BSON::ObjectId.from_string(entrant["racer"]["_id"]["$oid"])
       entrant["race"]["_id"]=BSON::ObjectId.from_string(entrant["race"]["_id"]["$oid"])
       entrant["race"]["date"]=DateTime.xmlschema(entrant["race"]["date"]["$date"])
-      if (entrant["results"] != nil) then
-        entrant["results"].map do |r|
-	  r["_id"] = BSON::ObjectId.from_string(r["_id"]["$oid"])
-	  r["event"]["_id"] = BSON::ObjectId.from_string(r["event"]["_id"]["$oid"])
-        end
-      end
       db[:results].insert_one(entrant)
     end
 
@@ -51,14 +45,12 @@ namespace :assignment do
 
   desc "adjust all ingested dates for assignment to current values"
   task adjust_dates: :environment do
-    db = Mongoid.default_client.database
+    db = Mongoid.default_client.database 
     puts "updating database: #{db.name}"
 
     NOW=Date.current
     max_date=db[:races].find.aggregate([ {:$group=>{:_id=>1, :max_date=>{:$max=>"$date"}}} ]).first[:max_date]
-    # increment delta by one to ensure that at least one of the
-    # dates falls in the future and satisfies the "upcoming" requirement
-    delta_years=NOW.year - max_date.year + 1
+    delta_years=NOW.year - max_date.year
 
     puts "updating race dates to current by #{delta_years} years"
     db[:races].find.each do |race|
