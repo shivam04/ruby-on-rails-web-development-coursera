@@ -1,0 +1,51 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html { 
+  font-family: Helvetica;
+}
+
+h1 {
+  font-size: 175%;
+  margin-top: 30px;
+}
+
+.item {
+  position: relative;
+  border: solid 1px;
+  background-color: grey;
+  padding: 10px;
+  margin-bottom: 30px;
+}
+
+.item > p {
+  margin-top: 20px;
+}
+
+.item-title {
+  position: absolute;
+  margin: 0px;
+  top: 0px;
+  right: 0px;
+  width: 120px;
+  border: solid black;
+  border-width: 0px 0px 1px 1px;
+  text-align: center;
+  font-size: 125%;
+}
+
+.item-title-pink {
+  background-color: pink;
+}
+
+.item-title-red {
+  background-color: red;
+  color: white;
+}
+
+.item-title-yellow {
+  background-color: khaki;
+}
